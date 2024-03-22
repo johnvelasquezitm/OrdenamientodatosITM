@@ -71,4 +71,85 @@ public class Documento {
         tbl.setModel(dtm);
     }
 
+    //metodo para intercambiar elementos
+    private static void intercambiar(int origen, int destino) {
+        Documento temporal = documentos.get(origen);
+        documentos.set(origen, documentos.get(destino));
+        documentos.set(destino, temporal);
+    }
+
+    //metodo para verificar si un documento es mayor que otro
+    private static boolean esMayor(Documento d1, Documento d2, int criterio) {
+        if (criterio == 0) {
+            //ordenar primero por Nombre Completo y luego por Tipo de Documento
+            return ((d1.getNombreCompleto().compareTo(d2.getNombreCompleto()) > 0)
+                    || (d1.getNombreCompleto().equals(d2.getNombreCompleto())
+                    && d1.getDocumento().compareTo(d2.getDocumento()) > 0));
+        } else {
+            //ordenar primero por Tipo de Documento y luego por Nombre Completo
+            return ((d1.getDocumento().compareTo(d2.getDocumento()) > 0)
+                    || (d1.getDocumento().equals(d2.getDocumento())
+                    && d1.getNombreCompleto().compareTo(d2.getNombreCompleto()) > 0));
+        }
+    }
+
+    //Método que ordena los datos según el algoritmo de la BURBUJA recursivo
+    public static void ordenarBurbujaRecursivo(int n, int criterio) {
+        if (n == documentos.size() - 1) {
+            return;
+        } else {
+            for (int i = n + 1; i < documentos.size(); i++) {
+                //System.out.println(n+" vs "+i);
+                if (esMayor(documentos.get(n), documentos.get(i), criterio)) {
+                    intercambiar(n, i);
+                }
+            }
+            ordenarBurbujaRecursivo(n + 1, criterio);
+        }
+    }
+
+    //Método que ordena los datos según el algoritmo de la BURBUJA
+    public static void ordenarBurbuja(int criterio) {
+        for (int i = 0; i < documentos.size() - 1; i++) {
+
+            //System.out.println("Vamos en " + i);
+            for (int j = i + 1; j < documentos.size(); j++) {
+                if (esMayor(documentos.get(i), documentos.get(j), criterio)) {
+                    intercambiar(i, j);
+                    //System.out.println("Intercambio " + documentos[i].getNombreCompleto() + " por " + documentos[j].getNombreCompleto());
+                }
+            }
+        }
+    }
+
+    private static int localizarPivote(int inicio, int fin, int criterio) {
+        int pivote = inicio;
+        Documento dP = documentos.get(pivote);
+
+        for (int i = inicio + 1; i <= fin; i++) {
+            if (esMayor(dP, documentos.get(i), criterio)) {
+                pivote++;
+                if (i != pivote) {
+                    intercambiar(i, pivote);
+                }
+            }
+        }
+        if (inicio != pivote) {
+            intercambiar(inicio, pivote);
+        }
+        return pivote;
+    }
+
+    //Método que ordena los datos según el algoritmo RAPIDO
+    public static void ordenarRapido(int inicio, int fin, int criterio) {
+        //punto de finalización
+        if (inicio >= fin) {
+            return;
+        }
+        //casos recursivos
+        int pivote = localizarPivote(inicio, fin, criterio);
+        ordenarRapido(inicio, pivote - 1, criterio);
+        ordenarRapido(pivote + 1, fin, criterio);
+    }
+
 }
