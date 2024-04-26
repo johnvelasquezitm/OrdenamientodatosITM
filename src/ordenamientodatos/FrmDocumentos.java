@@ -35,6 +35,8 @@ public class FrmDocumentos extends javax.swing.JFrame {
         btnOrdenarInsercion = new javax.swing.JButton();
         cmbCriterio = new javax.swing.JComboBox();
         txtTiempo = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocumentos = new javax.swing.JTable();
 
@@ -77,6 +79,18 @@ public class FrmDocumentos extends javax.swing.JFrame {
         jToolBar1.add(cmbCriterio);
         jToolBar1.add(txtTiempo);
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/Buscar.png"))); // NOI18N
+        btnBuscar.setFocusable(false);
+        btnBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnBuscar);
+        jToolBar1.add(txtBuscar);
+
         tblDocumentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -94,8 +108,8 @@ public class FrmDocumentos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,6 +141,13 @@ public class FrmDocumentos extends javax.swing.JFrame {
             Documento.mostrarDatos(tblDocumentos);
         }
     }//GEN-LAST:event_btnOrdenarRapidoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        Util.iniciarCronometro();
+        ArbolBinario ab = Documento.obtenerArbolBinario();
+        ab.setCriterio(cmbCriterio.getSelectedIndex());
+        txtTiempo.setText(Util.getTextoTiempoCronometro());
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,6 +185,7 @@ public class FrmDocumentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnOrdenarBurbuja;
     private javax.swing.JButton btnOrdenarInsercion;
     private javax.swing.JButton btnOrdenarRapido;
@@ -171,6 +193,7 @@ public class FrmDocumentos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tblDocumentos;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtTiempo;
     // End of variables declaration//GEN-END:variables
 }
