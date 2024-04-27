@@ -73,6 +73,11 @@ public class FrmDocumentos extends javax.swing.JFrame {
         btnOrdenarInsercion.setFocusable(false);
         btnOrdenarInsercion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnOrdenarInsercion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnOrdenarInsercion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarInsercionActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnOrdenarInsercion);
 
         cmbCriterio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nombre Completo, Tipo de Documento", "Tipo de Documento, Nombre Completo" }));
@@ -148,6 +153,15 @@ public class FrmDocumentos extends javax.swing.JFrame {
         ab.setCriterio(cmbCriterio.getSelectedIndex());
         txtTiempo.setText(Util.getTextoTiempoCronometro());
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnOrdenarInsercionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarInsercionActionPerformed
+       if (cmbCriterio.getSelectedIndex() >= 0) {
+            Util.iniciarCronometro();
+            Documento.ordenarInsercion(0, Documento.documentos.size() - 1, cmbCriterio.getSelectedIndex());
+            txtTiempo.setText(Util.getTextoTiempoCronometro());
+            Documento.mostrarDatos(tblDocumentos);
+       }
+    }//GEN-LAST:event_btnOrdenarInsercionActionPerformed
 
     /**
      * @param args the command line arguments

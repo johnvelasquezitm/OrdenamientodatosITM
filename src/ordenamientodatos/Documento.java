@@ -155,6 +155,17 @@ public class Documento {
         ordenarRapido(inicio, pivote - 1, criterio);
         ordenarRapido(pivote + 1, fin, criterio);
     }
+   public static void ordenarInsercion(int inicio, int fin, int criterio) {
+    for (int i = inicio + 1; i <= fin; i++) {
+        Documento key = documentos.get(i);
+        int j = i - 1;
+        while (j >= inicio && esMayor(documentos.get(j), key, criterio)) {
+            documentos.set(j + 1, documentos.get(j));
+            j--;
+        }
+        documentos.set(j + 1, key);
+    }
+}
 
     //Metodo que crea un arbol binario a partir de la lista de documentos
     public static ArbolBinario obtenerArbolBinario() {
